@@ -17,14 +17,12 @@ const useSignup = () => {
     try {
       console.log("Sending signup request...");
       const res = await fetch(
-        "https://chat-app-5515.onrender.com/auth/register",
+        "http://localhost:8080/auth/register",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // Add CORS headers if needed
-            "Access-Control-Allow-Origin": "http://localhost:5173",
-            // Add other headers as needed
+            
           },
           body: JSON.stringify({
             name,
