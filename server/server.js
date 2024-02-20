@@ -6,30 +6,39 @@ import authRoutes from "./routes/authRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
+
 
 
 
 const app = express();
+
+const corsOptions = {
+  origin: 'http://localhost:5173',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,  // Enable credentials (cookies, authorization headers, etc.)
+  optionsSuccessStatus: 204,  // For preflight requests
+};
+
+app.use(cors(corsOptions));
+
 dotenv.config();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
+
 
 app.use(express.json());
 app.use(cookieParser());
 
 connectDB();
 
-app.use("/auth",authRoutes) 
-app.use("/messages", messageRoutes)
+app.use("/auth", authRoutes);
+app.use("/messages", messageRoutes);
 
 app.use("/users", userRoutes);
 
-
-
 app.get("/", (req, res) => {
   res.send("Hello World");
- });
-
-
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
