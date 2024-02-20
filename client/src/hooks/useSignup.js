@@ -16,18 +16,24 @@ const useSignup = () => {
     setLoading(true);
     try {
       console.log("Sending signup request...");
-      const res = await fetch("http://localhost:8080/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          username,
-          password,
-          confirmPassword,
-        }),
-      });
+      const res = await fetch(
+        "https://chat-app-5515.onrender.com/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // Add CORS headers if needed
+            "Access-Control-Allow-Origin": "http://localhost:5173",
+            // Add other headers as needed
+          },
+          body: JSON.stringify({
+            name,
+            username,
+            password,
+            confirmPassword,
+          }),
+        }
+      );
 
       console.log("Received response:", res);
 
@@ -38,11 +44,13 @@ const useSignup = () => {
       }
 
       const data = await res.json();
+      console.log("Received response:", res);
+      console.log("Response body:", data);
       if (data.error) {
         toast.error(data.error);
         return;
       }
-      localStorage.setItem('token', data.token);
+      localStorage.setItem("token", data.token);
 
       toast.success("Signup successful");
     } catch (error) {

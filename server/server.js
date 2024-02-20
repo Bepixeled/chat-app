@@ -8,23 +8,12 @@ import userRoutes from "./routes/userRoutes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-
-
-
 const app = express();
 
-const corsOptions = {
-  origin: 'http://localhost:5173',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,  // Enable credentials (cookies, authorization headers, etc.)
-  optionsSuccessStatus: 204,  // For preflight requests
-};
-
-app.use(cors(corsOptions));
+app.use(cors);
 
 dotenv.config();
 const PORT = process.env.PORT || 8080;
-
 
 app.use(express.json());
 app.use(cookieParser());
