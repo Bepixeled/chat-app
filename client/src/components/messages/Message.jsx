@@ -1,6 +1,10 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 const Message = () => {
+
+
+
   return (
     <div className="chat chat-end">
       <div className="chat-image avatar">

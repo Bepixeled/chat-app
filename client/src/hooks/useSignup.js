@@ -1,8 +1,23 @@
 import { useState } from "react";
-import { toast } from "react-hot-toast";
 
 const useSignup = () => {
   const [loading, setLoading] = useState(false);
+
+  function handleInputErrors({ name, username, password, confirmPassword }) {
+    if (!name || !username || !password || !confirmPassword) {
+      alert("Please fill in all fields");
+      return false;
+    }
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return false;
+    }
+    if (password.length < 8) {
+      alert("Password must be at least 8 characters long");
+      return false;
+    }
+    return true;
+  }
 
   const signup = async ({ name, username, password, confirmPassword }) => {
     const success = handleInputErrors({
@@ -22,15 +37,12 @@ const useSignup = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            // Add CORS headers if needed
-            "Access-Control-Allow-Origin": "http://localhost:5173",
-            // Add other headers as needed
           },
           body: JSON.stringify({
-            name,
-            username,
-            password,
-            confirmPassword,
+            name: name,
+            username: username,
+            password: password,
+            confirmPassword: confirmPassword,
           }),
         }
       );
@@ -39,20 +51,15 @@ const useSignup = () => {
 
       if (!res.ok) {
         const errorData = await res.json();
-        toast.error(errorData.message || "Signup failed");
+        console.error(errorData.message || "Signup failed");
         return;
       }
 
       const data = await res.json();
       console.log("Received response:", res);
       console.log("Response body:", data);
-      if (data.error) {
-        toast.error(data.error);
-        return;
-      }
-      localStorage.setItem("token", data.token);
 
-      toast.success("Signup successful");
+      // localStorage.setItem("token", data.token);
     } catch (error) {
       console.error(error.message);
     } finally {
@@ -64,19 +71,3 @@ const useSignup = () => {
 };
 
 export default useSignup;
-
-function handleInputErrors({ name, username, password, confirmPassword }) {
-  if (!name || !username || !password || !confirmPassword) {
-    toast.error("Please fill in all fields");
-    return false;
-  }
-  if (password !== confirmPassword) {
-    toast.error("Passwords do not match");
-    return false;
-  }
-  if (password.length < 8) {
-    toast.error("Password must be at least 8 characters long");
-    return false;
-  }
-  return true;
-}
