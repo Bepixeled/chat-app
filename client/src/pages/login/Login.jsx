@@ -15,17 +15,18 @@ const Login = () => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ username, password }),
       });
-  
+
       if (res.ok) {
-        const data = await res.json();
-        if (data.token) { // Check if the token is present in the response
-          console.log("Login successful:", data, "Token:", data.token);
-          localStorage.setItem("token", data.token);
-          navigate("/");
-        } else {
-          console.error("Login failed: Token not received");
+        try {
+          const data = await res.json();
+          console.log("Response from server:", data);
+
+          // Rest of the code
+        } catch (error) {
+          console.error("Error parsing JSON response:", error);
         }
       } else {
         const errorData = await res.json();
