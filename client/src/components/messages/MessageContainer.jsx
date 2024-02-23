@@ -3,10 +3,12 @@ import Messages from './Messages'
 import MessageInput from './MessageInput'
 
 
+
 // Import the NoChatSelected component
 
-const MessageContainer = () => {
-    const noMessageSelected = false;
+const MessageContainer = (noMessageSelected) => {
+
+   
 
     return (
         <div className='md:min-w-[450px] lg:min-w-[550px] flex flex-col'>
@@ -32,7 +34,7 @@ const NoChatSelected = () => {
     return (
         <div className='flex-1 flex items-center justify-center'>
             <div className='flex flex-col gap-4 items-center'>
-        <p className='text-xl'>Hi Username! 👋</p>
+        <p className='text-xl'>Hi {username}! 👋</p>
         <p className='text-white'>Select a conversation to start messaging</p></div>
         </div>
     )
