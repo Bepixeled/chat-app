@@ -20,7 +20,6 @@ export const login = async (req, res) => {
       name: user.name,
       username: user.username,
       profilePicture: user.profilePicture,
-      token: generateToken(user._id),
     });
   } catch (error) {
     res.status(500).json(error.message);
