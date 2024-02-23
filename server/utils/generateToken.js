@@ -9,6 +9,7 @@ const generateToken = (userId, res) => {
     maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days in milliseconds
     httpOnly: true, // The cookie is only accessible by the web server to prevent attacks like XSS
     sameSite: "strict", // The cookie is not sent with cross-origin requests to prevent CSRF attacks
+    secure: process.env.NODE_ENV !== "development", // The cookie is only sent with HTTPS
   });
 };
 
